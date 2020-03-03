@@ -1,6 +1,7 @@
 # Loading Required Packages.
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Loading All DataFrames With The Size of 100000 Rows.
 df1 = pd.read_csv('H:/Masters/Thesis/2018/case_file/case_file.csv', nrows = 100000)
@@ -27,6 +28,23 @@ tmp_df1 = df1.isna().sum()
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df1 = df1[df1.columns[df1.isnull().sum() < 20000]]
 
+# Displays descriptive stats for all columns in df1.
+df1.describe()
+
+#vewing Datatypes in a DataFrame.
+df1.dtypes
+
+#Changing Object type to DataTime Format
+df1['cfh_status_dt'] = df1['cfh_status_dt'].astype('datetime64[ns]')
+df1['renewal_dt'] = df1['renewal_dt'].astype('datetime64[ns]')
+df1['registration_dt'] = df1['registration_dt'].astype('datetime64[ns]')
+df1['filing_dt'] = df1['filing_dt'].astype('datetime64[ns]')
+
+graph1 = df1['filing_dt'].groupby([df1.filing_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='blue')
+
+graph1 = df1['registration_dt'].groupby([df1.registration_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='green')
+
+graph1 = df1['renewal_dt'].groupby([df1.registration_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='red')
 
 
 #***************************************************** Working on Dataframe df2 *************************************************************
@@ -152,3 +170,4 @@ tmp_df15 = df15.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df15 = df15[df15.columns[df15.isnull().sum() < 20000]]
+
