@@ -40,11 +40,12 @@ df1['renewal_dt'] = df1['renewal_dt'].astype('datetime64[ns]')
 df1['registration_dt'] = df1['registration_dt'].astype('datetime64[ns]')
 df1['filing_dt'] = df1['filing_dt'].astype('datetime64[ns]')
 
+#KPI_01
 graph1 = df1['filing_dt'].groupby([df1.filing_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='blue')
 
 graph1 = df1['registration_dt'].groupby([df1.registration_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='green')
 
-graph1 = df1['renewal_dt'].groupby([df1.registration_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='red')
+graph1 = df1['renewal_dt'].groupby([df1.renewal_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='red')
 
 
 #***************************************************** Working on Dataframe df2 *************************************************************
@@ -153,6 +154,15 @@ tmp_df13 = df13.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df13 = df13[df13.columns[df13.isnull().sum() < 20000]]
+
+df13.dtypes
+
+#KPI_01
+graph13 = df13['own_addr_city'].groupby([df13.own_addr_city]).agg('count').plot(figsize=(8, 6), linewidth=2.5, color='blue')
+
+graph14 = df13['own_type_cd'].groupby([df13.own_type_cd]).agg('count').plot(figsize=(8, 6), linewidth=2.5, color='red')
+
+graph15 = df13['own_entity_cd'].groupby([df13.own_entity_cd]).agg('count').plot(figsize=(8, 6), linewidth=2.5, color='green')
 
 #***************************************************** Working on Dataframe df14 *************************************************************
 
