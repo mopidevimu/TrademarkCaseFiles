@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Loading All DataFrames With The Size of 100000 Rows.
 
@@ -35,7 +36,7 @@ df15 = pd.read_csv('H:/Masters/Thesis/2018/tm_app_daily/tm_app_daily.csv', nrows
 
 #***************************************************** Working on Dataframe df1 *************************************************************
 
-# Counting Null Values on Each Column in df1. 
+# Counting Null Values on Each Column in df1 'CASE_FILE'. 
 tmp_df1 = df1.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
@@ -60,15 +61,31 @@ graph1 = df1['registration_dt'].groupby([df1.registration_dt.dt.year]).agg('coun
 
 graph1 = df1['renewal_dt'].groupby([df1.renewal_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='red')
 
+#KPI_02
+
+reg_count =  df1['registration_no'].nunique()
+
 
 #***************************************************** Working on Dataframe df2 *************************************************************
 
-# Counting Null Values on Each Column in df2. 
+# Counting Null Values on Each Column in df2 'EVENT. 
 tmp_df2 = df2.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df2 = df2[df2.columns[df2.isnull().sum() < 20000]]
 
+#vewing Datatypes in a DataFrame.
+df2.dtypes
+
+#Changing Object type to DataTime Format
+df2['event_dt'] = df2['event_dt'].astype('datetime64[ns]')
+
+#KPI_01
+df2.groupby(['event_dt']).agg('count').plot()
+
+#KPI_02
+
+df2.groupby('event_cd').nunique().plot()
 
 #***************************************************** Working on Dataframe df3*************************************************************
 
@@ -77,6 +94,9 @@ tmp_df3 = df3.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df3 = df3[df3.columns[df3.isnull().sum() < 20000]]
+
+
+
 
 
 #***************************************************** Working on Dataframe df4 *************************************************************
@@ -168,14 +188,6 @@ tmp_df13 = df13.isna().sum()
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df13 = df13[df13.columns[df13.isnull().sum() < 20000]]
 
-df13.dtypes
-
-#KPI_01
-graph13 = df13['own_addr_city'].groupby([df13.own_addr_city]).agg('count').plot(figsize=(8, 6), linewidth=2.5, color='blue')
-
-graph14 = df13['own_type_cd'].groupby([df13.own_type_cd]).agg('count').plot(figsize=(8, 6), linewidth=2.5, color='red')
-
-graph15 = df13['own_entity_cd'].groupby([df13.own_entity_cd]).agg('count').plot(figsize=(8, 6), linewidth=2.5, color='green')
 
 #***************************************************** Working on Dataframe df14 *************************************************************
 
