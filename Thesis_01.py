@@ -4,21 +4,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Loading All DataFrames With The Size of 100000 Rows.
-df1 = pd.read_csv('H:/Masters/Thesis/2018/case_file/case_file.csv', nrows = 100000)
-df2 = pd.read_csv('H:/Masters/Thesis/2018/classification/classification.csv', nrows = 100000)
-df3 = pd.read_csv('H:/Masters/Thesis/2018/correspondent_domrep_attorney/correspondent_domrep_attorney.csv', nrows = 100000)
-df4 = pd.read_csv('H:/Masters/Thesis/2018/design_search/design_search.csv', nrows = 100000)
-df5 = pd.read_csv('H:/Masters/Thesis/2018/event/event.csv', nrows = 100000)
-df6 = pd.read_csv('H:/Masters/Thesis/2018/foreign_app/foreign_app.csv', nrows = 100000)
-df7 = pd.read_csv('H:/Masters/Thesis/2018/intl_class/intl_class.csv', nrows = 100000)
-df8 = pd.read_csv('H:/Masters/Thesis/2018/madrid_event/madrid_event.csv', nrows = 100000)
-df9 = pd.read_csv('H:/Masters/Thesis/2018/madrid_intl_file/madrid_intl_file.csv', nrows=100000)
-df10 = pd.read_csv('H:/Masters/Thesis/2018/statement/statement.csv', nrows=100000)
-df11 = pd.read_csv('H:/Masters/Thesis/2018/tm_app_daily/tm_app_daily.csv', nrows=100000)
-df12 = pd.read_csv('H:/Masters/Thesis/2018/us_class/us_class.csv', nrows=100000)
-df13 = pd.read_csv('H:/Masters/Thesis/2018/owner/owner.csv', nrows=100000)
-df14 = pd.read_csv('H:/Masters/Thesis/2018/owner_name_change/owner_name_change.csv', nrows=100000)
-df15 = pd.read_csv('H:/Masters/Thesis/2018/prior_mark/prior_mark.csv', nrows=100000)
+
+df1 = pd.read_csv('H:/Masters/Thesis/2018/case_file/case_file.csv', nrows = 100000,  low_memory=False)
+df2 = pd.read_csv('H:/Masters/Thesis/2018/event/event.csv', nrows = 100000,  low_memory=False)
+# ************************* OWNER FILES STRT ****************************************************************
+df3 = pd.read_csv('H:/Masters/Thesis/2018/owner/owner.csv', nrows=100000,  low_memory=False)
+df4 = pd.read_csv('H:/Masters/Thesis/2018/owner_name_change/owner_name_change.csv', nrows=100000)
+
+# ************************* CLASSIFICATION FILES STRT ****************************************************************
+df5 = pd.read_csv('H:/Masters/Thesis/2018/classification/classification.csv', nrows = 100000,  low_memory=False)
+df6 = pd.read_csv('H:/Masters/Thesis/2018/intl_class/intl_class.csv', nrows = 100000,  low_memory=False)
+df7 = pd.read_csv('H:/Masters/Thesis/2018/us_class/us_class.csv', nrows=100000,  low_memory=False)
+
+# ************************* THESE FILES LINKED TO 'CASEFILE'  ****************************************************************
+df8 = pd.read_csv('H:/Masters/Thesis/2018/statement/statement.csv', nrows=100000,  low_memory=False)
+df9 = pd.read_csv('H:/Masters/Thesis/2018/design_search/design_search.csv', nrows = 100000,  low_memory=False)
+df10 = pd.read_csv('H:/Masters/Thesis/2018/prior_mark/prior_mark.csv', nrows=100000,  low_memory=False)
+df11 = pd.read_csv('H:/Masters/Thesis/2018/foreign_app/foreign_app.csv', nrows = 100000,  low_memory=False)
+
+# ************************* MADRID FILES STRT ****************************************************************
+df12 = pd.read_csv('H:/Masters/Thesis/2018/madrid_intl_file/madrid_intl_file.csv', nrows=100000,  low_memory=False)
+df13 = pd.read_csv('H:/Masters/Thesis/2018/madrid_event/madrid_event.csv', nrows = 100000,  low_memory=False)
+
+# ************************* THESE FILES LINKED TO 'CASEFILE'  ****************************************************************
+df14 = pd.read_csv('H:/Masters/Thesis/2018/correspondent_domrep_attorney/correspondent_domrep_attorney.csv', nrows = 100000,  low_memory=False)
+
+
+df15 = pd.read_csv('H:/Masters/Thesis/2018/tm_app_daily/tm_app_daily.csv', nrows=100000,  low_memory=False)
+
 
 #***************************************************** Working on Dataframe df1 *************************************************************
 
