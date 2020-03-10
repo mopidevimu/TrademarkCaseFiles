@@ -1,8 +1,19 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 # Loading Required Packages.
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import missingno as msno
+
+
+# In[2]:
+
 
 # Loading All DataFrames With The Size of 100000 Rows.
 
@@ -34,7 +45,33 @@ df14 = pd.read_csv('H:/Masters/Thesis/2018/correspondent_domrep_attorney/corresp
 df15 = pd.read_csv('H:/Masters/Thesis/2018/tm_app_daily/tm_app_daily.csv', nrows=100000,  low_memory=False)
 
 
-#***************************************************** Working on Dataframe df1 *************************************************************
+# # Working on Dataframe df1
+
+# In[3]:
+
+
+#visulization of NULL values
+sns.heatmap(df1.isnull(), cbar=False)
+
+
+# In[12]:
+
+
+#In Otherform of  Visulization of Null Values
+msno.matrix(df1)
+
+
+# In[13]:
+
+
+#heatmap of null values
+msno.heatmap(df1)
+
+
+# # Removing Null Columns Which are havig more than 20%
+
+# In[5]:
+
 
 # Counting Null Values on Each Column in df1 'CASE_FILE'. 
 tmp_df1 = df1.isna().sum()
@@ -42,17 +79,55 @@ tmp_df1 = df1.isna().sum()
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df1 = df1[df1.columns[df1.isnull().sum() < 20000]]
 
+
+# # Visulization Of Removing Null Columns
+
+# In[6]:
+
+
+#visulization of NULL values
+sns.heatmap(df1.isnull(), cbar=False)
+
+
+# In[10]:
+
+
+df1.head()
+
+
+# In[16]:
+
+
+#datatypes in df1
+df1.dtypes
+
+
+# In[104]:
+
+
+#TYPECASTING Changing Object type to DataTime Format
+df1['cfh_status_dt'] = df1['cfh_status_dt'].astype('datetime64')
+df1['renewal_dt'] = df1['renewal_dt'].astype('datetime64[ns]')
+df1['registration_dt'] = df1['registration_dt'].astype('datetime64')
+df1['filing_dt'] = df1['filing_dt'].astype('datetime64[ns]')
+
+
+# In[15]:
+
+
+#TYPECASTING Changing int type to String Format
+df1['mark_id_char'] = df1['mark_id_char'].astype('string')
+
+
+# In[17]:
+
+
 # Displays descriptive stats for all columns in df1.
 df1.describe()
 
-#vewing Datatypes in a DataFrame.
-df1.dtypes
 
-#Changing Object type to DataTime Format
-df1['cfh_status_dt'] = df1['cfh_status_dt'].astype('datetime64[ns]')
-df1['renewal_dt'] = df1['renewal_dt'].astype('datetime64[ns]')
-df1['registration_dt'] = df1['registration_dt'].astype('datetime64[ns]')
-df1['filing_dt'] = df1['filing_dt'].astype('datetime64[ns]')
+# In[18]:
+
 
 #KPI_01
 graph1 = df1['filing_dt'].groupby([df1.filing_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='blue')
@@ -61,33 +136,85 @@ graph1 = df1['registration_dt'].groupby([df1.registration_dt.dt.year]).agg('coun
 
 graph1 = df1['renewal_dt'].groupby([df1.renewal_dt.dt.year]).agg('count').plot(figsize=(12, 10), linewidth=2.5, color='red')
 
-#KPI_02
 
-reg_count =  df1['registration_no'].nunique()
+# # Working on Dataframe df2
+
+# In[20]:
 
 
-#***************************************************** Working on Dataframe df2 *************************************************************
+#visulization of NULL values
+sns.heatmap(df2.isnull(), cbar=False)
 
-# Counting Null Values on Each Column in df2 'EVENT. 
-tmp_df2 = df2.isna().sum()
 
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df2 = df2[df2.columns[df2.isnull().sum() < 20000]]
+# In[22]:
 
-#vewing Datatypes in a DataFrame.
+
+# Displays descriptive stats for all columns in df2.
+df2.describe()
+
+
+# In[24]:
+
+
+df2.head(5)
+
+
+# In[31]:
+
+
+#datatypes in df2
 df2.dtypes
 
-#Changing Object type to DataTime Format
-df2['event_dt'] = df2['event_dt'].astype('datetime64[ns]')
+
+# In[105]:
+
+
+#TYPECASTING Changing int type to String Format
+df2['event_cd'] = df2['event_cd'].astype('string')
+df2['event_type_cd'] = df2['event_type_cd'].astype('string')
+df2['event_dt'] = df2['event_dt'].astype('datetime64')
+
+
+# In[32]:
+
 
 #KPI_01
 df2.groupby(['event_dt']).agg('count').plot()
+
+
+# In[35]:
+
 
 #KPI_02
 
 df2.groupby('event_cd').nunique().plot()
 
-#***************************************************** Working on Dataframe df3*************************************************************
+
+# # Working on Dataframe df3
+
+# In[37]:
+
+
+#visulization of NULL values
+sns.heatmap(df3.isnull(), cbar=False)
+
+
+# In[38]:
+
+
+# Displays descriptive stats for all columns in df2.
+df3.describe()
+
+
+# In[39]:
+
+
+#heatmap of null values
+msno.heatmap(df3)
+
+
+# In[41]:
+
 
 # Counting Null Values on Each Column in df3. 
 tmp_df3 = df3.isna().sum()
@@ -96,74 +223,295 @@ tmp_df3 = df3.isna().sum()
 df3 = df3[df3.columns[df3.isnull().sum() < 20000]]
 
 
+# In[42]:
 
 
-
-#***************************************************** Working on Dataframe df4 *************************************************************
-
-# Counting Null Values on Each Column in df4. 
-tmp_df4 = df4.isna().sum()
-
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df4 = df4[df4.columns[df4.isnull().sum() < 20000]]
+#visulization of NULL values
+sns.heatmap(df3.isnull(), cbar=False)
 
 
-#***************************************************** Working on Dataframe df5 *************************************************************
+# In[45]:
 
-# Counting Null Values on Each Column in df5. 
+
+# Displays descriptive stats for all columns in df2.
+df3.describe()
+
+
+# In[46]:
+
+
+df3.head(5)
+
+
+# In[47]:
+
+
+#datatypes in df3
+df3.dtypes
+
+
+# In[49]:
+
+
+#Changing Object type to DataTime Format
+df3['own_addr_city'] = df3['own_addr_city'].astype('string')
+df3['own_name'] = df3['own_name'].astype('string')
+df3['own_addr_state_cd'] = df3['own_addr_state_cd'].astype('string')
+
+
+# # Working on Dataframe df4
+
+# In[50]:
+
+
+#visulization of NULL values
+sns.heatmap(df4.isnull(), cbar=False)
+
+
+# In[51]:
+
+
+# Displays descriptive stats for all columns in df2.
+df4.describe()
+
+
+# In[52]:
+
+
+df4.head(5)
+
+
+# In[53]:
+
+
+#datatypes in df4
+df4.dtypes
+
+
+# In[54]:
+
+
+#Changing Object type to DataTime Format
+df4['own_name_change'] = df4['own_name_change'].astype('string')
+
+
+# # Working on Dataframe df5
+
+# In[55]:
+
+
+#visulization of NULL values
+sns.heatmap(df5.isnull(), cbar=False)
+
+
+# In[56]:
+
+
+# Counting Null Values on Each Column in df3. 
 tmp_df5 = df5.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df5 = df5[df5.columns[df5.isnull().sum() < 20000]]
 
 
-#***************************************************** Working on Dataframe df6 *************************************************************
-
-# Counting Null Values on Each Column in df6. 
-tmp_df6 = df6.isna().sum()
-
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df6 = df6[df6.columns[df6.isnull().sum() < 20000]]
+# In[57]:
 
 
-#***************************************************** Working on Dataframe df7 *************************************************************
-
-# Counting Null Values on Each Column in df7. 
-tmp_df7 = df7.isna().sum()
-
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df7 = df7[df7.columns[df7.isnull().sum() < 20000]]
+#visulization of NULL values
+sns.heatmap(df5.isnull(), cbar=False)
 
 
-
-#***************************************************** Working on Dataframe df8 *************************************************************
-
-# Counting Null Values on Each Column in df8. 
-tmp_df8 = df8.isna().sum()
-
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df8 = df8[df8.columns[df8.isnull().sum() < 20000]]
+# In[58]:
 
 
-#***************************************************** Working on Dataframe df9 *************************************************************
-
-# Counting Null Values on Each Column in df9. 
-tmp_df9 = df9.isna().sum()
-
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df9 = df9[df9.columns[df9.isnull().sum() < 20000]]
+# Displays descriptive stats for all columns in df5.
+df5.describe()
 
 
-#***************************************************** Working on Dataframe df10 *************************************************************
-
-# Counting Null Values on Each Column in df10. 
-tmp_df10 = df10.isna().sum()
-
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df10 = df10[df10.columns[df10.isnull().sum() < 20000]]
+# In[59]:
 
 
-#***************************************************** Working on Dataframe df11 *************************************************************
+#datatypes in df5
+df5.dtypes
+
+
+# In[60]:
+
+
+df5.head(5)
+
+
+# In[106]:
+
+
+#Changing Object type to DataTime Format
+df5['class_status_dt'] = df5['class_status_dt'].astype('datetime64')
+
+
+# # Working on Dataframe df6
+
+# In[62]:
+
+
+#visulization of NULL values
+sns.heatmap(df6.isnull(), cbar=False)
+
+
+# In[64]:
+
+
+# Displays descriptive stats for all columns in df5.
+df6.describe()
+
+
+# In[65]:
+
+
+df6.head(5)
+
+
+# In[66]:
+
+
+#datatypes in df6
+df6.dtypes
+
+
+# # Working on Dataframe df7
+
+# In[72]:
+
+
+#visulization of NULL values
+sns.heatmap(df7.isnull(), cbar=False)
+
+
+# In[75]:
+
+
+# Displays descriptive stats for all columns in df5.
+df7.describe()
+
+
+# In[76]:
+
+
+df7.head(5)
+
+
+# In[77]:
+
+
+#datatypes in df7
+df7.dtypes
+
+
+# # Working on Dataframe df8
+
+# In[78]:
+
+
+#visulization of NULL values
+sns.heatmap(df8.isnull(), cbar=False)
+
+
+# In[79]:
+
+
+# Displays descriptive stats for all columns in df8.
+df8.describe()
+
+
+# In[83]:
+
+
+#datatypes in df8
+df8.dtypes
+
+
+# In[84]:
+
+
+df8.head(5)
+
+
+# In[82]:
+
+
+#Changing Object type to DataTime Format
+df8['statement_type_cd'] = df8['statement_type_cd'].astype('string')
+df8['statement_text'] = df8['statement_text'].astype('string')
+
+
+# # Working on Dataframe df9
+
+# In[85]:
+
+
+#visulization of NULL values
+sns.heatmap(df9.isnull(), cbar=False)
+
+
+# In[86]:
+
+
+# Displays descriptive stats for all columns in df9.
+df9.describe()
+
+
+# In[87]:
+
+
+#datatypes in df9
+df9.dtypes
+
+
+# In[91]:
+
+
+df9.head(5)
+
+
+# # Working on Dataframe df10
+
+# In[88]:
+
+
+#visulization of NULL values
+sns.heatmap(df10.isnull(), cbar=False)
+
+
+# In[89]:
+
+
+# Displays descriptive stats for all columns in df9.
+df10.describe()
+
+
+# In[93]:
+
+
+#datatypes in df9
+df10.dtypes
+
+
+# In[92]:
+
+
+df10.head(5)
+
+
+# # Working on Dataframe df11
+
+# In[95]:
+
+
+#visulization of NULL values
+sns.heatmap(df11.isnull(), cbar=False)
+
+
+# In[96]:
+
 
 # Counting Null Values on Each Column in df11. 
 tmp_df11 = df11.isna().sum()
@@ -172,37 +520,222 @@ tmp_df11 = df11.isna().sum()
 df11 = df11[df11.columns[df11.isnull().sum() < 20000]]
 
 
-#***************************************************** Working on Dataframe df12 *************************************************************
+# In[97]:
 
-# Counting Null Values on Each Column in df12. 
+
+#visulization of NULL values
+sns.heatmap(df11.isnull(), cbar=False)
+
+
+# In[98]:
+
+
+# Displays descriptive stats for all columns in df9.
+df11.describe()
+
+
+# In[113]:
+
+
+#datatypes in df9
+df11.dtypes
+
+
+# In[101]:
+
+
+df11.head(10)
+
+
+# In[110]:
+
+
+pd.Timestamp.min
+
+
+# In[112]:
+
+
+#Changing Object type to DataTime Format
+
+df11['for_appl_country_cd'] = df11['for_appl_country_cd'].astype('string')
+
+
+# # Working on Dataframe df12
+
+# In[114]:
+
+
+#visulization of NULL values
+sns.heatmap(df12.isnull(), cbar=False)
+
+
+# In[115]:
+
+
+# Counting Null Values on Each Column in df11. 
 tmp_df12 = df12.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df12 = df12[df12.columns[df12.isnull().sum() < 20000]]
 
-#***************************************************** Working on Dataframe df13 *************************************************************
 
-# Counting Null Values on Each Column in df13. 
-tmp_df13 = df13.isna().sum()
-
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df13 = df13[df13.columns[df13.isnull().sum() < 20000]]
+# In[116]:
 
 
-#***************************************************** Working on Dataframe df14 *************************************************************
+#visulization of NULL values
+sns.heatmap(df12.isnull(), cbar=False)
 
-# Counting Null Values on Each Column in df14. 
+
+# In[117]:
+
+
+# Displays descriptive stats for all columns in df9.
+df12.describe()
+
+
+# In[121]:
+
+
+#datatypes in df12
+df12.dtypes
+
+
+# In[119]:
+
+
+df12.head(10)
+
+
+# In[120]:
+
+
+#Changing Object type to DataTime Format
+df12['mir_uspto_ref_no'] = df12['mir_uspto_ref_no'].astype('string')
+df12['mir_registration_dt'] = df12['mir_registration_dt'].astype('datetime64')
+df12['mir_renewal_dt'] = df12['mir_renewal_dt'].astype('datetime64')
+
+
+# # Working on Dataframe df13
+
+# In[122]:
+
+
+#visulization of NULL values
+sns.heatmap(df13.isnull(), cbar=False)
+
+
+# In[124]:
+
+
+# Displays descriptive stats for all columns in df9.
+df13.describe()
+
+
+# In[125]:
+
+
+#datatypes in df13
+df13.dtypes
+
+
+# In[126]:
+
+
+df13.head(10)
+
+
+# In[129]:
+
+
+#Changing Object type to DataTime Format
+df13['mir_event_cd'] = df13['mir_event_cd'].astype('string')
+df13['mir_event_dt'] = df13['mir_event_dt'].astype('datetime64')
+
+
+# # Working on Dataframe df14
+
+# In[131]:
+
+
+#visulization of NULL values
+sns.heatmap(df14.isnull(), cbar=False)
+
+
+# In[133]:
+
+
+# Counting Null Values on Each Column in df11. 
 tmp_df14 = df14.isna().sum()
 
 # Removing Columns Which Is having More than 20000 NULL Values in a Column.
 df14 = df14[df14.columns[df14.isnull().sum() < 20000]]
 
 
-#***************************************************** Working on Dataframe df15 *************************************************************
+# In[134]:
 
-# Counting Null Values on Each Column in df15. 
-tmp_df15 = df15.isna().sum()
 
-# Removing Columns Which Is having More than 20000 NULL Values in a Column.
-df15 = df15[df15.columns[df15.isnull().sum() < 20000]]
+#visulization of NULL values
+sns.heatmap(df14.isnull(), cbar=False)
+
+
+# In[135]:
+
+
+# Displays descriptive stats for all columns in df9.
+df14.describe()
+
+
+# In[136]:
+
+
+df14.dtypes
+
+
+# In[137]:
+
+
+df14.head(5)
+
+
+# In[139]:
+
+
+#Changing Object type to DataTime Format
+df14['caddr_1'] = df14['caddr_1'].astype('string')
+
+
+# # Working on Dataframe df15
+
+# In[141]:
+
+
+#visulization of NULL values
+sns.heatmap(df15.isnull(), cbar=False)
+
+
+# In[142]:
+
+
+df15.dtypes
+
+
+# In[143]:
+
+
+df15.head(5)
+
+
+# In[144]:
+
+
+#Changing Object type to DataTime Format
+df15['tad_create_dt'] = df15['tad_create_dt'].astype('datetime64')
+df15['tad_version_dt'] = df15['tad_version_dt'].astype('datetime64')
+
+
+# In[ ]:
+
+
+
 
